@@ -32,9 +32,15 @@ class Container:
         # amounts stay as they are; they were equal in the old component
 
     def addWater(self, amt: float) -> None:
-        """Add water to this container and redistribute in its component."""
-        self.amount += amt
-        self._redistribute_in_component()
+        """Add (or remove, if negative) water and redistribute; disallow overdraw."""
+        component = self._collect_component()
+        current_total = sum(c.amount for c in component)
+        new_total = current_total + amt
+        if new_total < 0:
+            raise ValueError("Cannot remove more water than available in component")
+        each = new_total / len(component)
+        for c in component:
+            c.amount = each
 
     # Internal helpers ----------------------------------------
 

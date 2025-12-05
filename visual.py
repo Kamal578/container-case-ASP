@@ -29,8 +29,14 @@ class Container:
             other._neighbors.remove(self)
 
     def addWater(self, amt: float) -> None:
-        self.amount += amt
-        self._redistribute_in_component()
+        comp = self._collect_component()
+        current_total = sum(c.amount for c in comp)
+        new_total = current_total + amt
+        if new_total < 0:
+            raise ValueError("Cannot remove more water than available in component")
+        each = new_total / len(comp)
+        for c in comp:
+            c.amount = each
 
     def _collect_component(self):
         stack = [self]

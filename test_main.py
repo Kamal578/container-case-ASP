@@ -55,6 +55,30 @@ class ContainerTests(unittest.TestCase):
         self.assertAlmostEqual(b.getAmount(), 3.0)
         self.assertAlmostEqual(c.getAmount(), 3.0)
 
+    def test_negative_within_component_budget(self):
+        a = Container(5)
+        b = Container(5)
+        a.connectTo(b)  # both 5
+
+        a.addWater(-4)  # total 6 -> each 3
+
+        self.assertAlmostEqual(a.getAmount(), 3.0)
+        self.assertAlmostEqual(b.getAmount(), 3.0)
+
+    def test_negative_overdraw_raises_and_preserves_state(self):
+        a = Container(2)
+        original = a.getAmount()
+
+        with self.assertRaises(ValueError):
+            a.addWater(-3)
+
+        self.assertAlmostEqual(a.getAmount(), original)
+
+    def test_negative_to_zero(self):
+        a = Container(1.5)
+        a.addWater(-1.5)
+        self.assertAlmostEqual(a.getAmount(), 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

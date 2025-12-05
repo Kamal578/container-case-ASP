@@ -15,6 +15,10 @@ class Container:
     def connectTo(self, other: "Container") -> None:
         if other is self:
             return
+        if other in self._neighbors:
+            return  # already directly connected
+        if other in self._collect_component():
+            return  # already connected via another path; prevent cycle
         self._neighbors.add(other)
         other._neighbors.add(self)
         self._redistribute_in_component()

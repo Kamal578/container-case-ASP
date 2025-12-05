@@ -22,7 +22,7 @@ Small Python exercise that models interconnected water containers. When two cont
 
 ## How it works
 - Each `Container` tracks its `amount` of water and its neighbors.
-- Connecting two containers merges their components and redistributes water evenly across every container in that component.
+- Connecting two containers merges their components and redistributes water evenly across every container in that component; duplicate edges and cycle-forming connections are ignored to avoid extra work.
 - Adding water to any container also redistributes within its component; disconnecting stops future sharing but keeps current levels.
 
 ## Usage patterns
@@ -36,7 +36,7 @@ Small Python exercise that models interconnected water containers. When two cont
 - Connectivity is tracked as an undirected graph via neighbor sets.
 - When water needs to be redistributed (after connect or add), the algorithm depth-first traverses the connected component to collect nodes, sums their amounts, and writes back the average to each node.
 - Time complexity for redistribution is O(N + E) in the component; space is O(N) for the traversal set/stack. For small teaching examples this is fine; for large graphs a union-find–based approach with stored totals would avoid repeated traversals.
-- Disconnect simply removes the edge; because levels are already equalized, no extra work is needed.
+- Disconnect simply removes the edge; because levels are already equalized, no extra work is needed. Reconnecting nodes already in the same component is treated as a no-op to avoid redundant traversals.
 
 ## Example sequence (console)
 The bottom of `main.py` runs a short scenario. Expected outputs:

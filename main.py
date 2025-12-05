@@ -11,6 +11,10 @@ class Container:
         """Connect this container to `other` and equalize water in the union."""
         if other is self:
             return  # ignore self-connection
+        if other in self._neighbors:
+            return  # already directly connected; no work needed
+        if other in self._collect_component():
+            return  # already connected via some path; avoid cycles
 
         # undirected edge
         self._neighbors.add(other)

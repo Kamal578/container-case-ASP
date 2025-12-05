@@ -20,6 +20,12 @@ Small Python exercise that models interconnected water containers. When two cont
   python visual.py
   ```
 
+## Tests
+- Run the unit tests:
+  ```bash
+  python -m unittest test_main.py
+  ```
+
 ## How it works
 - Each `Container` tracks its `amount` of water and its neighbors.
 - Connecting two containers merges their components and redistributes water evenly across every container in that component; duplicate edges and cycle-forming connections are ignored to avoid extra work.

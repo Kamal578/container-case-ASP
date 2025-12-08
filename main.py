@@ -37,7 +37,10 @@ class Container:
         current_total = sum(c.amount for c in component)
         new_total = current_total + amt
         if new_total < 0:
-            raise ValueError("Cannot remove more water than available in component")
+            # Don't allow removing more water than is present in the component
+            # Make a warning or instead of changing anything
+            print("Warning: Cannot remove more water than available in component. No changes made.")
+            return
         each = new_total / len(component)
         for c in component:
             c.amount = each

@@ -55,6 +55,14 @@ class ContainerTests(unittest.TestCase):
         self.assertAlmostEqual(b.getAmount(), 3.0)
         self.assertAlmostEqual(c.getAmount(), 3.0)
 
+    def test_negative_initial_raises(self):
+        with self.assertRaises(ValueError):
+            Container(-1)
+
+    def test_zero_initial_allowed(self):
+        c = Container(0)
+        self.assertEqual(c.getAmount(), 0.0)
+
     def test_negative_within_component_budget(self):
         a = Container(5)
         b = Container(5)

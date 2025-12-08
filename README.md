@@ -38,6 +38,8 @@ Small Python exercise that models interconnected water containers. When two cont
 - Use `disconnectFrom` to break a link; afterward each component evolves independently.
 - Read the current water level with `getAmount`.
 
+**Validation:** Creating a container with a negative initial amount raises `ValueError`; totals are allowed to reach exactly zero but not below.
+
 ## Algorithm notes
 - Connectivity is tracked as an undirected graph via neighbor sets. As undirected edges in each container’s neighbor set (symmetric entries).
 - When water needs to be redistributed (after connect or add), the algorithm depth-first traverses the connected component to collect nodes, sums their amounts, and writes back the average to each node.

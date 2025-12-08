@@ -6,7 +6,10 @@ import math
 
 class Container:
     def __init__(self, initial=0.0):
-        self.amount = float(initial)
+        amt = float(initial)
+        if amt < 0:
+            raise ValueError("Initial water amount cannot be negative")
+        self.amount = amt
         self._neighbors = set()
 
     def getAmount(self) -> float:

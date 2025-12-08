@@ -1,6 +1,9 @@
 class Container:
     def __init__(self, initial=0.0):
-        self.amount = float(initial)
+        amt = float(initial)
+        if amt < 0:
+            raise ValueError("Initial water amount cannot be negative")
+        self.amount = amt
         self._neighbors = set()
 
     def getAmount(self) -> float:
@@ -37,10 +40,7 @@ class Container:
         current_total = sum(c.amount for c in component)
         new_total = current_total + amt
         if new_total < 0:
-            # Don't allow removing more water than is present in the component
-            # Make a warning or instead of changing anything
-            print("Warning: Cannot remove more water than available in component. No changes made.")
-            return
+            raise ValueError("Cannot remove more water than available in component")
         each = new_total / len(component)
         for c in component:
             c.amount = each
